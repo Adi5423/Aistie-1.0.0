@@ -1,0 +1,12 @@
+0 - go to sleep0 - graphics card is not that good for gaming
+a - your graphics card is not that good for gaming like to upgrade
+0 - your program is very good you did a great job
+0 - update your program
+0 - acid the program
+laptop - update your laptop
+Jarvis - save the changes and update to laptop
+update - update the changes and save the laptop
+assistant - update your program because it is not finding any reminder with a specified key given to it update this
+0 - did the capacity string in your program of a personal assistant
+testing - hello mike testing
+0 - used the last copied one

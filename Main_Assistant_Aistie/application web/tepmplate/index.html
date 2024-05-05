@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Assistant GUI</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>Assistant GUI</h1>
+    <button id="start-listening">Start Listening</button>
+    <button id="wake-up">Wake Up</button>
+    <div id="output"></div>
+
+    <script>
+        $(document).ready(function() {
+            $('#start-listening').click(function() {
+                $.ajax({
+                    type: 'POST',
+                url: '/listen',
+                    data: new FormData($('form')[0]),
+                    contentType: false,
+                    processData: false,
+                    success: function(data) {
+                        $('#output').text('Assistant: ' + data);
+                    }
+                });
+            });
+
+            $('#wake-up').click(function() {
+                $.ajax({
+                    type: 'POST',
+                    url: '/wake-up',
+                    success: function(data) {
+                        $('#output').text('Assistant: ' + data);
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
