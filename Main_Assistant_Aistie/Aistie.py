@@ -14,6 +14,7 @@ import pywhatkit
 import pyperclip
 from groq import Groq
 from hand_control_draw import drawing
+from tkinter import messagebox  
 
 
 
@@ -168,6 +169,10 @@ def takeCommand():
         search_query = query.replace("pst" , "+")
         webbrowser.open(f"https://www.youtube.com/results?search_query={search_query}")
         speak("Opening youtube for the song sir")
+    
+    # elif "the time" in query:
+    #     strTime = datetime.datetime.now().strftime("%H:%M:%S")
+    #     speak(f"Sir, the time is {strTime}")
 
     return query
 
@@ -207,7 +212,9 @@ def main():
             speak(results)
         
         #  Convert 24-hour time to AM/PM time
-        
+        elif "the time" in query:
+            strTime = datetime.datetime.now().strftime("%H:%M:%S")
+            speak(f"Sir, the time is {strTime}")
         
         elif "open youtube" in query:
             webbrowser.open("youtube.com")
@@ -222,15 +229,24 @@ def main():
         
         elif "open google" in query:
             webbrowser.open("google.com")
-            speak("   Opening Google")
-            
+            speak("   Opening Google")    
             
         elif 'open'in query and 'gesture'in query:
             speak('Sure , sir now i have some amazing options in gesture control , hope you seeing the list on screen')    
-            code = True
-            gesture(code)
-            # speak(result).
-
+            speak("Sir , Press Yes for Gesture Drawing Control , and , No for Gesture Mouse Control")
+            ask = messagebox.askquestion("Gesture Controller" , "YES for Drawing \n NO for Mouse")
+            # engine.runAndWait()
+            if "yes" in ask:
+                code = True
+                speak("Here's your Gesture Mouse Controller Sir. Enjoy")
+                drawing(code)
+                continue
+            else:
+                code = True
+                speak("Here's your Gesture Drawing Controller Sir. Enjoy")
+                gesture(code)
+                continue
+            
         elif 'play ' in query:
             # speak("Sure sir. Just tell me the name of the Song. with the keyword p s t to search on youtube. ")
             search_query = query.replace("play" , "" )
@@ -338,6 +354,7 @@ def main():
         else:
             groq_response = execute(query)
             speak(groq_response)
+            print(groq_response)
             
             
             '''

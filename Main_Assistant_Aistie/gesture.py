@@ -82,7 +82,7 @@ def gesture(code):
                     print("before great - " , abs(avg_palm_x - x) , "\nFor y - " , abs(avg_palm_y - y))
                     if abs(avg_palm_x - x) < 25 and abs(avg_palm_y - y) < 25:
                         if not great_printed:
-                            code_preset 
+                            code_preset(great_printed)
                             
                     else:
                         great_printed = False
@@ -98,7 +98,8 @@ def gesture(code):
     
         cv2.imshow('Frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
+            code=False
             break
-        
-        
-# gesture(True)
+# code = True        
+# gesture(code)
+# code = False

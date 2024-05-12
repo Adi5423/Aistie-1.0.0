@@ -93,10 +93,10 @@ popupmsg("Hello, World!")
 import tkinter as tk
 from tkinter import messagebox
 ask = messagebox.askquestion("Question", "Do you want to continue?")
-# messagebox.showerror("Error", "This is an error message.")
-# messagebox.showinfo("Information", "This is an informational message.")
-# messagebox.askokcancel("Confirmation", "Are you sure you want to delete this file?")
-# messagebox.askyesno("Confirmation", "Do you want to save the changes?")
+messagebox.showerror("Error", "This is an error message.")
+messagebox.showinfo("Information", "This is an informational message.")
+messagebox.askokcancel("Confirmation", "Are you sure you want to delete this file?")
+messagebox.askyesno("Confirmation", "Do you want to save the changes?")
 if "yes" in ask:
     print("User clicked Yes.")
 else:
