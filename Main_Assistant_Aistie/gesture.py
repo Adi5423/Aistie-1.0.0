@@ -99,3 +99,6 @@ def gesture(code):
         cv2.imshow('Frame', frame)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+        
+        
+# gesture(True)

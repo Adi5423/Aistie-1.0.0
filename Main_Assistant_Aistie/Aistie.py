@@ -13,7 +13,7 @@ from gesture import gesture
 import pywhatkit
 import pyperclip
 from groq import Groq
-
+from hand_control_draw import drawing
 
 
 
@@ -226,6 +226,7 @@ def main():
             
             
         elif 'open'in query and 'gesture'in query:
+            speak('Sure , sir now i have some amazing options in gesture control , hope you seeing the list on screen')    
             code = True
             gesture(code)
             # speak(result).
