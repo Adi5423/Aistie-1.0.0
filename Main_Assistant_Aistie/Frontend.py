@@ -1,4 +1,5 @@
-
+# from Aistie import Main
+# from Aistie import Aistie
 import datetime
 import os
 import pyttsx3
@@ -6,29 +7,30 @@ import speech_recognition as sr
 import wikipedia
 import webbrowser
 import smtplib
-import requests 
+import requests
 import time
-from selenium import webdriver 
+from selenium import webdriver
 import linecache
 from gesture import gesture
 import pywhatkit
 import pyperclip
 from groq import Groq
 from hand_control_draw import drawing
-from tkinter import messagebox  
+import tkinter as tk 
+from tkinter import StringVar, messagebox
 
-# # ----------------Variables------------------------
-# file_exp_status = False
-# files =[]
-# path = ''
-# is_awake = True  #Bot status
+# Initialize the engine
+engine = pyttsx3.init()
+# Set the voice
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
 
-# Groq Service 
+def clear_output(output_text):
+    output_text.delete("1.0", tk.END)
+    
 client = Groq()
-
-def Main(check0):
-    if check0 == True:
-        def execute(query):
+    
+def execute(query):
                     completion = client.chat.completions.create(
                         model="llama3-8b-8192",
                         messages=[
@@ -51,7 +53,7 @@ def Main(check0):
                     return response
 
 
-        def saver(reminds):
+def saver(reminds):
                     file = open(path, "a")
                     unsuccesfull = False
                     try:
@@ -65,7 +67,7 @@ def Main(check0):
                     return unsuccesfull
 
 
-        def remind(key, query):
+def remind(key, query):
                     while True:
                         reminds = {None:None}
                         try:
@@ -88,9 +90,9 @@ def Main(check0):
                             reminds = {None:None}
                             return
 
-        path = "D:\\Py_Start\\Programming\\Projects\\Laptop_Assistant\\Main_Assistant_Aistie\\reminder\\reminders.txt"
+path = "D:\\Py_Start\\Programming\\Projects\\Laptop_Assistant\\Main_Assistant_Aistie\\reminder\\reminders.txt"
 
-        def reader(key):
+def reader(key):
                     with open(path, "r") as file:
                         lines = file.readlines()
                         if key != 0:
@@ -123,20 +125,21 @@ def Main(check0):
                                 speak(output)  # Speak the result
                                 return output
 
-        capasity = "I can open websites, search for things on the internet, tell the time , greet you , play music , can set reminders for you in the system , can read the left reminders, trying to open applications also ."
+capasity = "I can open websites, search for things on the internet, tell the time , greet you , play music , can set reminders for you in the system , can read the left reminders, trying to open applications also ."
 
-        # Initialize the engine
-        engine = pyttsx3.init()
-        # Set the voice
-        voices = engine.getProperty('voices')
-        engine.setProperty('voice', voices[1].id)
+# Initialize the engine
+engine = pyttsx3.init()
+# Set the voice
+voices = engine.getProperty('voices')
+engine.setProperty('voice', voices[1].id)
 
-        def speak(text):
+def speak(text):
                 engine.say(text)
                 engine.runAndWait()
+                
 
 
-        def wishMe():
+def wishMe():
                     hour = int(datetime.datetime.now().hour)
                     if hour >= 0 and hour < 12:
                         speak("   Good morning!")
@@ -146,7 +149,7 @@ def Main(check0):
                         speak("   Good evening!")
                     speak("   I am you personal assistant Sir. My name is Aistie. Please tell me how may I assist you today!!")
 
-        def takeCommand():
+def takeCommand():
                     r = sr.Recognizer()
                     with sr.Microphone() as source:
                         print("Listening...")
@@ -174,7 +177,7 @@ def Main(check0):
 
                     return query
 
-        def takeCommandHindi():
+def takeCommandHindi():
                     r = sr.Recognizer()
                     with sr.Microphone() as source:
                         print('Listening')
@@ -192,7 +195,7 @@ def Main(check0):
 
 
 
-        def get_weather(city):
+def get_weather(city):
                     api_key = "066d7dce815c25f9814b08e0090399a0"
                     base_url = "http://api.openweathermap.org/data/2.5/weather?"
                     complete_url = f"{base_url}appid={api_key}&q={city}"
@@ -209,11 +212,14 @@ def Main(check0):
                     else:
                         return "City not found."
 
-        def main():
+ar = True
+def Aistie():
                     # global is_awake
                     # is_awake = True
-
+                    # if ar == True :
+                    #     wishMe()
                     while True:
+                        ar = False
                         query = takeCommand()
                         query=query.lower()
                         # datetime.datetime.now().strftime("%I:%M %p") == '00:00'
@@ -253,12 +259,12 @@ def Main(check0):
                             # engine.runAndWait()
                             if "yes" in ask:
                                 code = True
-                                speak("Here's your Gesture Mouse Controller Sir. Enjoy")
+                                speak("Here's your Gesture Drawing Controller Sir. Enjoy")
                                 drawing(code)
                                 continue
                             else:
                                 code = True
-                                speak("Here's your Gesture Drawing Controller Sir. Enjoy")
+                                speak("Here's your Gesture Mouse Controller Sir. Enjoy")
                                 gesture(code)
                                 continue
                             
@@ -364,7 +370,8 @@ def Main(check0):
 
                         elif 'bye' in query or 'exit' in query or 'quit' in query:
                             speak('Goodbye! Have a great day.')
-                            check0 = False
+                            # check0 = False
+                            break
 
 
                         else:
@@ -372,10 +379,10 @@ def Main(check0):
                             speak(groq_response)
                             print(groq_response)
 
-                        if check0 == True :
-                            continue
-                        else:
-                            break
+                        # if check0 == True :
+                        #     continue
+                        # else:
+                        #     break
                         
                             '''
                             speak("Would you like me to search that on the internet sir?")
@@ -391,6 +398,50 @@ def Main(check0):
                                 speak("Sorry sir, I am unable to help you with that. Tell me what more to assist with?")
                             ''' 
 
-        if __name__ == "__main__":
-            wishMe()
-            main()
+    
+    
+
+def frontend():
+    window = tk.Tk()
+    window.title("Aistie - Your AI Assistant")
+    window.geometry("1520x950")  # Adjust the size as needed
+
+    # Add a title label
+    title_label = tk.Label(window, text="Aistie AI Assistant", font=("Arial", 18, "bold"))
+    title_label.pack(pady=10)
+
+    # Create the input/output area
+    input_frame = tk.Frame(window)
+    input_frame.pack()
+
+    # Input text box
+    input_text = tk.Text(input_frame, height=5, width=50)
+    input_text.pack(side="left", padx=10)
+
+        # Output text box
+    output_text = tk.Text(input_frame, height=8, width=50, state="disabled")  # Start as disabled
+    output_text.pack(side="right", padx=10)
+
+    # Buttons
+    button_frame = tk.Frame(window)
+    button_frame.pack(pady=10)
+
+    # Speak button
+    # speak_button = tk.Button(button_frame, text="Speak", command=lambda: speak(input_text.get("1.0", "end-1c")))
+    speak_button = tk.Button(button_frame, text="Speak", command=lambda: speak(input_text.get("1.0", "end-1c")))
+    speak_button.pack(side="left", padx=5)
+
+    # talk button
+    talk_button = tk.Button(button_frame, text="Talk", command=lambda: Aistie())
+    talk_button.pack(side="left", padx=5)
+
+    # Clear button
+    clear_button = tk.Button(button_frame, text="Clear", command=lambda: clear_output(output_text))
+    clear_button.pack(side="left", padx=5)
+
+    # ... Add other features (reminder, weather, etc.) as frames ...
+
+    window.mainloop()
+
+if __name__ == "__main__":
+    frontend()
